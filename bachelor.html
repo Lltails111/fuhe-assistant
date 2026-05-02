@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>本科专业复核 | 留服智能助手</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container bachelor-container">
+        <header class="header">
+            <div class="header-left">
+                <a href="index.html" class="back-link">← 返回首页</a>
+                <span class="level-badge bachelor-badge">本科生</span>
+            </div>
+            <h1>📖 本科专业复核自述生成</h1>
+            <p class="subtitle">基础课程匹配 · 学分体系对接 · 专业大类分析</p>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section">
+                <div class="form-card">
+                    <h3>📝 基本信息</h3>
+                    
+                    <div class="form-group">
+                        <label><span class="required">*</span> 申请人姓名</label>
+                        <input type="text" id="userName" placeholder="请输入真实姓名" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 海外本科院校</label>
+                        <input type="text" id="universityName" placeholder="例如：University of California, Berkeley" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 海外本科专业名称（英文）</label>
+                        <input type="text" id="overseasMajor" placeholder="例如：Bachelor of Science in Computer Science" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label>专业方向/细分领域（可选）</label>
+                        <input type="text" id="specialization" placeholder="例如：软件工程、人工智能、数据科学" autocomplete="off">
+                        <small>如有专业细分方向，请填写</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 学制</label>
+                        <select id="educationLength">
+                            <option value="3年">3年</option>
+                            <option value="4年" selected>4年</option>
+                            <option value="5年">5年</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>GPA/成绩（可选）</label>
+                        <input type="text" id="gpa" placeholder="例如：3.8/4.0 或 85/100" autocomplete="off">
+                        <small>用于佐证学术能力</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 高中毕业类别</label>
+                        <select id="highSchoolType">
+                            <option value="普通高中">普通高中（理科）</option>
+                            <option value="普通高中文科">普通高中（文科）</option>
+                            <option value="国际高中">国际高中</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 申请用途</label>
+                        <select id="useType">
+                            <option value="国内升学">国内升学（考研/保研）</option>
+                            <option value="就业">就业市场认证</option>
+                            <option value="考公">公务员报考</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 核心课程清单</label>
+                        <textarea id="courseList" rows="6" placeholder="每行一门核心课程，例如：&#10;Calculus I (微积分I)&#10;Linear Algebra (线性代数)&#10;Data Structures (数据结构)&#10;Computer Organization (计算机组成)&#10;Operating Systems (操作系统)&#10;Database Systems (数据库系统)"></textarea>
+                        <small>请列出6-10门核心课程，中英文均可</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>获奖/项目经历（可选）</label>
+                        <textarea id="achievements" rows="3" placeholder="例如：&#10;全国大学生数学建模竞赛省一等奖&#10;校级优秀学生奖学金&#10;课程项目：电商网站开发"></textarea>
+                        <small>有助于佐证专业能力</small>
+                    </div>
+
+                    <button class="btn-submit" id="submitBtn" onclick="startMatching()">
+                        🚀 开始匹配专业
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-card" id="resultCard">
+                    <div class="result-tabs">
+                        <button class="tab-btn active" data-tab="match">🎯 专业匹配</button>
+                        <button class="tab-btn" data-tab="school">🏫 高校推荐</button>
+                        <button class="tab-btn" data-tab="table">📊 课程对比表</button>
+                        <button class="tab-btn" data-tab="statement">📄 复核自述</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-match">
+                        <div id="matchResult" class="result-placeholder">
+                            <p>等待提交信息...</p>
+                            <p class="placeholder-desc">请填写左侧表单，点击「开始匹配专业」</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-school">
+                        <div id="pdfArea" class="result-placeholder">
+                            <p>等待生成高校推荐...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-table">
+                        <div id="finalArea" class="result-placeholder">
+                            <p>等待生成课程对比表...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-statement">
+                        <div id="statementArea" class="result-placeholder">
+                            <p>等待生成复核自述...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>基于《普通高等学校本科专业目录》| 结果仅供参考，以留服中心审核为准</p>
+        </footer>
+    </div>
+
+    <!-- 本科专用脚本 -->
+    <script src="js/utils/api.js"></script>
+    <script src="js/knowledge/knowledge_loader.js"></script>
+    <script src="js/agents/bachelor_match_agent.js"></script>
+    <script src="js/agents/bachelor_school_agent.js"></script>
+    <script src="js/agents/bachelor_compare_agent.js"></script>
+    <script src="js/agents/bachelor_statement_agent.js"></script>
+    <script src="js/agents/feedback_agent.js"></script>
+    <script src="js/storage/tracker.js"></script>
+    <script src="js/bachelor.js"></script>
+</body>
+</html>

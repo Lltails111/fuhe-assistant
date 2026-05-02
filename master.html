@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>硕士专业复核 | 留服智能助手</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container master-container">
+        <header class="header">
+            <div class="header-left">
+                <a href="index.html" class="back-link">← 返回首页</a>
+                <span class="level-badge master-badge">硕士研究生</span>
+            </div>
+            <h1>🎓 专业复核自述生成</h1>
+            <p class="subtitle">填写信息后，AI将为您匹配国内二级学科并生成复核自述</p>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section">
+                <div class="form-card">
+                    <h3>📝 基本信息</h3>
+                    
+                    <div class="form-group">
+                        <label><span class="required">*</span> 申请人姓名</label>
+                        <input type="text" id="userName" placeholder="请输入真实姓名" autocomplete="off">
+                        <small>用于自述中自动填充</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 海外留学院校</label>
+                        <input type="text" id="universityName" placeholder="例如：University of Manchester" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 海外硕士专业名称（英文）</label>
+                        <input type="text" id="overseasMajor" placeholder="例如：MSc Artificial Intelligence" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 本科专业名称</label>
+                        <input type="text" id="bachelorMajor" placeholder="例如：计算机科学与技术" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 申请用途</label>
+                        <select id="useType">
+                            <option value="考公">公务员报考</option>
+                            <option value="就业">就业市场认证</option>
+                            <option value="其他">其他（请在自述中说明）</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 核心课程清单</label>
+                        <textarea id="courseList" rows="5" placeholder="每行一门核心课程，例如：&#10;Machine Learning&#10;Deep Learning&#10;Natural Language Processing&#10;Computer Vision"></textarea>
+                        <small>请列出4-6门核心课程，中英文均可</small>
+                    </div>
+
+                    <button class="btn-submit" id="submitBtn" onclick="startMatching()">
+                        🚀 开始匹配专业
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-card" id="resultCard">
+                    <div class="result-tabs">
+                        <button class="tab-btn active" data-tab="match">🎯 专业匹配</button>
+                        <button class="tab-btn" data-tab="school">🏫 高校推荐</button>
+                        <button class="tab-btn" data-tab="table">📊 课程对比表</button>
+                        <button class="tab-btn" data-tab="statement">📄 复核自述</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-match">
+                        <div id="matchResult" class="result-placeholder">
+                            <p>等待提交信息...</p>
+                            <p class="placeholder-desc">请填写左侧表单，点击「开始匹配专业」</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-school">
+                        <div id="pdfArea" class="result-placeholder">
+                            <p>等待生成高校推荐...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-table">
+                        <div id="finalArea" class="result-placeholder">
+                            <p>等待生成课程对比表...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-statement">
+                        <div id="statementArea" class="result-placeholder">
+                            <p>等待生成复核自述...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>基于《学位授予和人才培养学科目录》| 结果仅供参考，以留服中心审核为准</p>
+        </footer>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/knowledge/knowledge_loader.js"></script>
+    <script src="js/agents/match_agent.js"></script>
+    <script src="js/agents/school_agent.js"></script>
+    <script src="js/agents/compare_agent.js"></script>
+    <script src="js/agents/statement_agent.js"></script>
+    <script src="js/agents/feedback_agent.js"></script>
+    <script src="js/storage/tracker.js"></script>
+    <script src="js/master.js"></script>
+</body>
+</html>

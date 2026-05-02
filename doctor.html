@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>博士专业复核 | 留服智能助手</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container doctor-container">
+        <header class="header">
+            <div class="header-left">
+                <a href="index.html" class="back-link">← 返回首页</a>
+                <span class="level-badge doctor-badge">博士研究生</span>
+            </div>
+            <h1>🔬 博士专业复核自述生成</h1>
+            <p class="subtitle">研究方向匹配 · 导师团队分析 · 论文关键词提取</p>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section">
+                <div class="form-card">
+                    <h3>📝 基本信息</h3>
+                    
+                    <div class="form-group">
+                        <label><span class="required">*</span> 申请人姓名</label>
+                        <input type="text" id="userName" placeholder="请输入真实姓名" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 海外博士院校</label>
+                        <input type="text" id="universityName" placeholder="例如：University of Cambridge" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 海外博士专业名称（英文）</label>
+                        <input type="text" id="overseasMajor" placeholder="例如：PhD in Computer Science" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 研究方向</label>
+                        <input type="text" id="researchDirection" placeholder="例如：机器学习、计算机视觉、自然语言处理" autocomplete="off">
+                        <small>请填写1-3个主要研究方向，用逗号分隔</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>博士论文题目（可选）</label>
+                        <input type="text" id="thesisTitle" placeholder="例如：基于深度学习的图像语义分割研究" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 硕士专业名称</label>
+                        <input type="text" id="masterMajor" placeholder="例如：计算机科学与技术" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 本科专业名称</label>
+                        <input type="text" id="bachelorMajor" placeholder="例如：软件工程" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 申请用途</label>
+                        <select id="useType">
+                            <option value="高校教职">高校教职</option>
+                            <option value="科研院所">科研院所</option>
+                            <option value="企业研发">企业研发</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="required">*</span> 核心课程/研究经历</label>
+                        <textarea id="courseList" rows="5" placeholder="每行一门核心课程或主要研究经历，例如：&#10;高级机器学习&#10;深度学习理论&#10;计算机视觉前沿&#10;发表论文：CVPR 2023"></textarea>
+                        <small>请列出博士期间的核心课程或主要研究经历</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>发表论文关键词（可选）</label>
+                        <input type="text" id="paperKeywords" placeholder="例如：深度学习、图像分割、Transformer" autocomplete="off">
+                        <small>填写已发表论文的关键词，有助于更精准匹配</small>
+                    </div>
+
+                    <button class="btn-submit" id="submitBtn" onclick="startMatching()">
+                        🚀 开始匹配专业
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-card" id="resultCard">
+                    <div class="result-tabs">
+                        <button class="tab-btn active" data-tab="match">🎯 专业匹配</button>
+                        <button class="tab-btn" data-tab="school">🏫 高校/导师推荐</button>
+                        <button class="tab-btn" data-tab="table">📊 课程/研究对比表</button>
+                        <button class="tab-btn" data-tab="statement">📄 复核自述</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-match">
+                        <div id="matchResult" class="result-placeholder">
+                            <p>等待提交信息...</p>
+                            <p class="placeholder-desc">请填写左侧表单，点击「开始匹配专业」</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-school">
+                        <div id="pdfArea" class="result-placeholder">
+                            <p>等待生成导师/高校推荐...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-table">
+                        <div id="finalArea" class="result-placeholder">
+                            <p>等待生成课程/研究对比表...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-statement">
+                        <div id="statementArea" class="result-placeholder">
+                            <p>等待生成复核自述...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>基于《学位授予和人才培养学科目录》| 结果仅供参考，以留服中心审核为准</p>
+        </footer>
+    </div>
+
+    <!-- 博士专用脚本 -->
+    <script src="js/utils/api.js"></script>
+    <script src="js/knowledge/knowledge_loader.js"></script>
+    <script src="js/agents/doctor_match_agent.js"></script>
+    <script src="js/agents/doctor_school_agent.js"></script>
+    <script src="js/agents/doctor_compare_agent.js"></script>
+    <script src="js/agents/doctor_statement_agent.js"></script>
+    <script src="js/agents/feedback_agent.js"></script>
+    <script src="js/storage/tracker.js"></script>
+    <script src="js/doctor.js"></script>
+</body>
+</html>
