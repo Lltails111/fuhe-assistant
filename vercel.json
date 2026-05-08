@@ -1,27 +1,11 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "api/index.js",
-            "use": "@vercel/node"
-        },
-        {
-            "src": "*.html",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "css/**",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "js/**",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "*.json",
-            "use": "@vercel/static"
+    "outputDirectory": ".",
+    "functions": {
+        "api/index.js": {
+            "maxDuration": 10
         }
-    ],
+    },
     "routes": [
         {
             "src": "/api/(.*)",
@@ -29,10 +13,6 @@
         },
         {
             "handle": "filesystem"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/index.html"
         }
     ]
 }
